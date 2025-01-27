@@ -40,7 +40,6 @@ rule show-help ( )
 if [ MATCH ^(help)$ : [ modules.peek : ARGV ] ]
 {
 	show-help ;
-	echo "debug - help" ;
 	exit ;
 }
 
@@ -55,8 +54,6 @@ if [ MATCH ^(cleanall)$ : [ modules.peek : ARGV ] ]
 	cmd = "rm -rf $(config-file)" ;
 	echo "$(cmd)" ;
 	SHELL $(cmd) ;
-
-	echo "debug - cleanall" ;
 
 	exit ;
 }
@@ -76,14 +73,12 @@ if [ MATCH ^(config)$ : [ modules.peek : ARGV ] ]
 	echo "============" ;
 	echo "incdir\t\t$(incdir)" ;
 	echo "============" ;
-	echo "debug - config" ;
 	exit ;
 }
 
 if ! [ path.exists $(config-file) ]
 {
 	show-help ;
-	echo "debug - exists" ;
 	exit ;
 }
 
