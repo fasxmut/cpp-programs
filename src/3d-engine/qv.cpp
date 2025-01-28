@@ -14,12 +14,47 @@
 #include <filesystem>
 #include <boost/assert.hpp>
 #include <stdfloat>
+#include <chrono>
+#include <future>
 
 using std::string_literals::operator""s;
 using std::string_view_literals::operator""sv;
+using std::placeholders::_1;
 
 namespace game
 {
+	class engine;
+
+	class map_loader;
+
+	class viewer
+	{
+	public:
+		using signal_type = boost::signals2::signal<void(const std::string &)>;
+		using slot_type = signal_type::slot_type;
+		using connection_type = boost::signals2::connection;
+	private:
+		std::string __name;
+		std::vector<connection_type> __connections;
+	public:
+		virtual ~viewer()
+		{
+			for (auto & connection: __connections)
+				connection.disconnect();
+		}
+	public:
+		viewer(const std::string_view name__):
+			__name{name__}
+		{
+		}
+	public:
+		void attach(int prior__, game::engine & qml__);
+		void attach(int prior__, game::map_loader & qml__);
+		void queue(const std::string & msg__)
+		{
+			std::cout << "[" << __name << "] " << msg__ << std::endl;
+		}
+	};	// class viewer
 
 	class engine
 	{
@@ -31,6 +66,8 @@ namespace game
 		jpp::io::IFileSystem * fs;
 		jpp::scene::ICameraSceneNode * camera;
 		jpp::scene::IMetaTriangleSelector * meta;
+	private:
+		game::viewer::signal_type __signal;
 	public:
 		virtual ~engine()
 		{
@@ -40,6 +77,7 @@ namespace game
 				device = nullptr;
 			}
 			std::cout << "Engine is closed." << std::endl;
+			this->signal("engine: closed");
 		}
 	public:
 		engine() = delete;
@@ -104,12 +142,30 @@ namespace game
 				camera->addAnimator(collision);
 				collision->drop();
 			}
+			this->signal("engine: Ready!");
+			std::chrono::system_clock::time_point old, now;
+			now = std::chrono::system_clock::now();
+			old = now;
+			std::chrono::system_clock::duration du_time = std::chrono::seconds(0);
 			while (device->run())
 			{
 				if (device->isWindowActive())
 				{
 					video->beginScene(true, true, jpp::video::SColor{0xff3399aa});
 					scene->drawAll();
+					{
+						now = std::chrono::system_clock::now();
+						if (now - old >= std::chrono::seconds(2))
+						{
+							this->signal(
+								"engine: time passed: "s
+								+ std::to_string(du_time.count() * 1.0f/1'000'000'000)
+								+ " seconds"
+							);
+							old = now;
+							du_time += std::chrono::seconds(2);
+						}
+					}
 					video->endScene();
 				}
 				else
@@ -117,6 +173,22 @@ namespace game
 					device->yield();
 				}
 			}
+		}
+	public:
+		game::viewer::connection_type attach(
+			int prior__,
+			const game::viewer::slot_type & slot__
+		)
+		{
+			return __signal.connect(
+				prior__,
+				slot__
+			);
+		}
+	protected:
+		void signal(const std::string & msg__)
+		{
+			this->__signal(msg__);
 		}
 	};	// class engine
 
@@ -126,10 +198,14 @@ namespace game
 		game::engine & __engine;
 		std::vector<std::string> __map_list;
 		std::vector<jpp::scene::IAnimatedMesh *> __mesh_list;
+		game::viewer::signal_type __signal;
 	public:
 		map_loader() = delete;
 	public:
-		virtual ~map_loader() = default;
+		virtual ~map_loader()
+		{
+			this->signal("map loader: Game is over");
+		}
 	public:
 		map_loader(game::engine & engine__):
 			__engine{engine__}
@@ -238,6 +314,7 @@ namespace game
 			}
 			if (! loaded_a)
 				throw std::runtime_error{"Can not load at least one master map!"};
+			this->signal("map loader: Map is loaded!");
 			return loaded_a;
 		}
 	protected:
@@ -296,6 +373,7 @@ namespace game
 							nullptr,
 							-1
 						);
+						this->signal("map loader: Items are added");
 						jpp::scene::ITriangleSelector * selector =
 							__engine.scene->createTriangleSelector(
 								node->getMesh(),
@@ -340,12 +418,54 @@ namespace game
 				p_pos = 0;
 				std::float32_t angle = jpp::scene::quake3::getAsFloat(angle_str, p_pos);
 				__engine.camera->setPosition(pos);
+				this->signal("map loader: Player is added");
 				jpp::core::vector3df dir{0, 0, 1};
 				dir.rotateXZBy(angle);
 				__engine.camera->setTarget(pos + dir);
 			}
 		}
-	};
+	public:
+		game::viewer::connection_type attach(
+			int prior__,
+			const game::viewer::slot_type & slot__
+		)
+		{
+			return __signal.connect(prior__, slot__);
+		}
+	protected:
+		void signal(const std::string msg__)
+		{
+			this->__signal(msg__);
+		}
+	};	// class map_loader
+
+	void game::viewer::attach(int prior__, game::engine & engine__)
+	{
+		__connections.push_back(
+			engine__.attach(
+				prior__,
+				std::bind(
+					&game::viewer::queue,
+					this,
+					_1
+				)
+			)
+		);
+	}
+
+	void game::viewer::attach(int prior__, game::map_loader & qml__)
+	{
+		__connections.push_back(
+			qml__.attach(
+				prior__,
+				std::bind(
+					&game::viewer::queue,
+					this,
+					_1
+				)
+			)
+		);
+	}
 
 }	// namespace game
 
@@ -354,12 +474,26 @@ try
 {
 	if (argc != 2)
 		throw std::runtime_error{""s + "qv <pk3 name>"};
-	game::engine engine{1925, 1085};
 
-	game::map_loader qml{engine};
-	qml.load(argv[1]);
+	game::viewer viewer1{"viewer 1"};
+	game::viewer viewer2{"viewer 2"};
 
-	engine.run();
+	// viewer lifetime must be longer than source lifetime.
+	{
+		game::engine engine{1925, 1085};
+		game::map_loader qml{engine};
+
+		viewer1.attach(0, qml);
+		viewer2.attach(0, qml);
+
+		viewer1.attach(1, engine);
+		viewer2.attach(1, engine);
+
+		qml.load(argv[1]);
+
+		engine.run();
+	}
+
 	return 0;
 }
 catch (const std::exception & e)
