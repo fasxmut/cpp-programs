@@ -7,3 +7,11 @@
 
 echo "Build cpp-programs/src/3d-engine ..." ;
 
+exe
+	qv
+:
+	qv.cpp
+:
+	<library>../..//jimcpp
+;
+
