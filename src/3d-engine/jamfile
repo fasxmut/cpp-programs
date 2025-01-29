@@ -32,3 +32,11 @@ exe
 	<library>../..//jimcpp
 ;
 
+exe
+	mesh-buffer-rectangle
+:
+	mesh-buffer-rectangle.cpp
+:
+	<library>../..//jimcpp
+;
+
