@@ -24,3 +24,11 @@ exe
 	<library>../..//botan-3
 ;
 
+exe
+	mesh-buffer
+:
+	mesh-buffer.cpp
+:
+	<library>../..//jimcpp
+;
+
