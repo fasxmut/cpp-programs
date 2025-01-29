@@ -32,10 +32,10 @@ namespace my_mesh
 		inline void create()
 		{
 			std::vector<jpp::video::S3DVertex> vertices{
-				{10,-10,0,    0,0,-1,    0xffff0000,    1,0},
-				{10,10,0,    0,0,-1,    0xff00ff00,    1,1},
-				{-10,10,0,    0,0,-1,    0xff0000ff,    0,1},
-				{-10,-10,0,    0,0,-1,    0xffffffff,    0,0}
+				{10,-10,0,    0,0,-1,    0xffff0000,    1,1},
+				{10,10,0,    0,0,-1,    0xff00ff00,    1,0},
+				{-10,10,0,    0,0,-1,    0xff0000ff,    0,0},
+				{-10,-10,0,    0,0,-1,    0xffffffff,    0,1}
 			};
 			std::vector<jpp::u16> indices;
 
@@ -70,11 +70,13 @@ try
 	bool reverse_order = false;
 	bool enable_back_face_culling = true;
 
-	if (argc != 3)
+	if (argc < 3)
 	{
 		std::cout << "usage:\n\n";
-		std::cout << "mesh-buffer-rectangle <enable_back_face_culling> <reverse_order>\n\n"
-			<< "For example:\nmesh-buffer-rectangle true false\n";
+		std::cout
+			<< "mesh-buffer-rectangle <enable_back_face_culling> <reverse_order> [texture]\n\n"
+			<< "For example:\nmesh-buffer-rectangle true false\n"
+			<< "mesh-buffer-rectangle true false mesh-buffer-rectangle.texture.png\n";
 		std::cout << std::endl;
 		throw std::runtime_error{"arguements error"};
 	}
@@ -90,6 +92,13 @@ try
 	else if ("false"s == argv[2])
 		reverse_order = false;
 	else
+		throw std::runtime_error{"arguments error"};
+
+	std::string texture_fn = "";
+	if (argc == 4)
+		texture_fn = argv[3];
+
+	if (argc > 4)
 		throw std::runtime_error{"arguments error"};
 
 	jpp::JimcppDevice * device = jpp::createDevice(
@@ -141,6 +150,10 @@ try
 		{
 			node->setMaterialFlag(jpp::video::EMF_LIGHTING, false);
 			node->setMaterialFlag(jpp::video::EMF_BACK_FACE_CULLING, enable_back_face_culling);
+			if (! texture_fn.empty())
+			{
+				node->setMaterialTexture(0, video->getTexture(texture_fn.data()));
+			}
 		}
 	}
 	else
