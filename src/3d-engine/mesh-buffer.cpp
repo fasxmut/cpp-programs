@@ -38,18 +38,18 @@ namespace my_mesh
 				{-10,-10,10,    -1,-1,1,    0xff00ffff,    0.5,0.5}	// 7
 			};
 			std::vector<jpp::u16> indices{
-				0,1,2,
-				0,2,3,
-				0,4,5,
-				0,5,1,
-				1,5,6,
-				1,6,2,
-				2,6,7,
-				2,7,3,
-				4,7,6,
-				4,6,5,
-				0,3,7,
-				0,7,4
+				0,2,1,
+				0,3,2,
+				0,5,4,
+				0,1,5,
+				1,6,5,
+				1,2,6,
+				2,7,6,
+				2,3,7,
+				4,6,7,
+				4,5,6,
+				0,7,3,
+				0,4,7
 			};
 			auto buffer = new jpp::scene::SMeshBuffer;
 			buffer->append(
@@ -110,7 +110,7 @@ try
 		if (mb_count > 0)
 		{
 			node->setMaterialFlag(jpp::video::EMF_LIGHTING, true);
-			node->setMaterialFlag(jpp::video::EMF_BACK_FACE_CULLING, false);
+			node->setMaterialFlag(jpp::video::EMF_BACK_FACE_CULLING, true);
 			bool enable_texture = true;
 			if (enable_texture)
 				node->setMaterialTexture(0, video->getTexture(texture.data()));
