@@ -32,7 +32,8 @@ rule show-help ( )
 	echo "===============" ;
 	echo ;
 	echo "   --incdir=/inc/dir        - Change user-defined include dir" ;
-	echo "                              (st. botan-3 will be searched in /inc/dir/botan-3)" ;
+	echo "                              (/inc/dir will be added as \"-I/inc/dir\")" ;
+	echo "                              (botan-3 will be searched at /inc/dir/botan-3)" ;
 	echo "                              (default: /usr/include)" ;
 	echo "--------------------------------------------------------------------------------" ;
 }
