@@ -15,3 +15,12 @@ exe
 	<library>../..//jimcpp
 ;
 
+exe
+	light
+:
+	light.cpp
+:
+	<library>../..//jimcpp
+	<library>../..//botan-3
+;
+
