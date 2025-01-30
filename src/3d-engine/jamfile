@@ -48,3 +48,11 @@ exe
 	<library>../..//jimcpp
 ;
 
+exe
+	mesh-convert
+:
+	mesh-convert.cpp
+:
+	<library>../..//jimcpp
+;
+

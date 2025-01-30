@@ -31,10 +31,10 @@ rule show-help ( )
 	echo "config options:" ;
 	echo "===============" ;
 	echo ;
-	echo "   --incdir=/inc/dir        - Change user-defined include dir" ;
-	echo "                              (/inc/dir will be added as \"-I/inc/dir\")" ;
-	echo "                              (botan-3 will be searched at /inc/dir/botan-3)" ;
-	echo "                              (default: /usr/include)" ;
+	echo "   --botan-include=/inc/dir   - Change user-defined botan include dir" ;
+	echo "                                (botan-3 will be searched at /inc/dir/botan-3)" ;
+	echo "                                (/inc/dir will be added as \"-I/inc/dir\")" ;
+	echo "                                (default: /usr/include)" ;
 	echo "--------------------------------------------------------------------------------" ;
 }
 
@@ -63,16 +63,16 @@ if [ MATCH ^(config)$ : [ modules.peek : ARGV ] ]
 {
 	SHELL ": > $(config-file)" ;
 
-	incdir = [ option.get incdir ] ;
-	if ! $(incdir)
+	botan-include = [ option.get botan-include ] ;
+	if ! $(botan-include)
 	{
-		incdir = /usr/include ;
+		botan-include = /usr/include ;
 	}
-	SHELL "echo \"constant incdir : $(incdir) ;\" >> $(config-file)" ;
+	SHELL "echo \"constant botan-include : $(botan-include) ;\" >> $(config-file)" ;
 
 	echo "Your config:" ;
 	echo "============" ;
-	echo "incdir\t\t$(incdir)" ;
+	echo "botan-include\t\t$(botan-include)" ;
 	echo "============" ;
 	exit ;
 }
@@ -96,7 +96,7 @@ project
 :
 	default-build
 		<cxxstd>23
-		<cxxflags>"-I$(incdir)"
+		<cxxflags>"-I$(botan-include)"
 :
 	requirements
 		<library>boost-headers
@@ -108,29 +108,29 @@ project
 # botan-3
 
 #|
-	check botan-3: it must exist at $(incdir)
+	check botan-3: it must exist at $(botan-include)
 |#
 
 echo ;
-if ! [ path.exists $(incdir)/botan-3 ]
+if ! [ path.exists $(botan-include)/botan-3 ]
 {
 	echo "ERROR:" ;
-	echo "\t$(incdir)/botan-3 does not exist," ;
+	echo "\t$(botan-include)/botan-3 does not exist," ;
 	echo "Fix:" ;
-	echo "\tchange b2 config --incdir=your/path/to/include to contain botan-3" ;
+	echo "\tchange b2 config --botan-include=your/path/to/include to contain botan-3" ;
 	exit ;
 }
-else if ! [ path.exists $(incdir)/botan-3/botan/asio_stream.h ]
+else if ! [ path.exists $(botan-include)/botan-3/botan/asio_stream.h ]
 {
 	echo "ERROR:" ;
-	echo "\t$(incdir)/botan-3 does exist," ;
-	echo "\tbut $(incdir)/botan-3/botan/asio_stream.h does not exist," ;
+	echo "\t$(botan-include)/botan-3 does exist," ;
+	echo "\tbut $(botan-include)/botan-3/botan/asio_stream.h does not exist," ;
 	echo "\thave you built botan-3 with boost support?" ;
 	echo "Fix:" ;
 	echo "\tRebuild botan-3 with boost support." ;
 	exit ;
 }
-echo "Found: $(incdir)/botan-3/botan/asio_stream.h" ;
+echo "Found: $(botan-include)/botan-3/botan/asio_stream.h" ;
 
 lib
 	botan-3
@@ -139,7 +139,7 @@ lib
 	<name>botan-3
 :
 :
-	<include>$(incdir)/botan-3
+	<include>$(botan-include)/botan-3
 ;
 ######################################################################
 
