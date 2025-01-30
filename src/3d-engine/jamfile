@@ -56,3 +56,12 @@ exe
 	<library>../..//jimcpp
 ;
 
+exe
+	write-mesh
+:
+	write-mesh.cpp
+:
+	<library>../..//jimcpp
+	<library>../..//botan-3
+;
+
