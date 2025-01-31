@@ -71,7 +71,7 @@ try
 	);
 	node->setMaterialFlag(jpp::video::EMF_LIGHTING, true);
 
-	jpp::scene::ILightSceneNode * light = scene->addLightSceneNode(
+	scene->addLightSceneNode(
 		camera,	// attach light to camera
 		jpp::core::vector3df{0, 0, 0},	// position relative to camera
 		light_color,

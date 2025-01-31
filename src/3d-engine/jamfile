@@ -65,3 +65,13 @@ exe
 	<library>../..//botan-3
 ;
 
+exe
+	export-wave
+:
+	export-wave.cpp
+:
+	<library>../..//jimcpp
+	<library>../..//lyra
+	<library>../..//botan-3
+;
+
