@@ -75,3 +75,11 @@ exe
 	<library>../..//botan-3
 ;
 
+exe
+	shared-device
+:
+	shared-device.cpp
+:
+	<library>../..//testpub
+;
+
