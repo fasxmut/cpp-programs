@@ -5,19 +5,19 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <jimcpp/core.hpp>
+#include <testpub/core.hpp>
 #include <iostream>
 
 int main()
 {
-	auto device =jpp::createDevice();
+	auto device =testp::createDevice();
 	auto scene = device->getSceneManager();
 
-	jpp::io::IFileSystem * fs = device->getFileSystem();
+	testp::io::IFileSystem * fs = device->getFileSystem();
 
 	{
 		// append: false
-		jpp::io::IWriteFile * file = fs->createAndWriteFile("hello.cpp", false);
+		testp::io::IWriteFile * file = fs->createAndWriteFile("hello.cpp", false);
 
 		const std::string str = R"(//
 			#include <iostream>

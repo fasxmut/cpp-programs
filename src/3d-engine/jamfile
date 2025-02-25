@@ -12,7 +12,7 @@ exe
 :
 	qv.cpp
 :
-	<library>../..//jimcpp
+	<library>../..//testpub
 ;
 
 exe
@@ -20,7 +20,7 @@ exe
 :
 	light.cpp
 :
-	<library>../..//jimcpp
+	<library>../..//testpub
 	<library>../..//botan-3
 ;
 
@@ -29,7 +29,7 @@ exe
 :
 	mesh-buffer.cpp
 :
-	<library>../..//jimcpp
+	<library>../..//testpub
 ;
 
 exe
@@ -37,7 +37,7 @@ exe
 :
 	mesh-buffer-rectangle.cpp
 :
-	<library>../..//jimcpp
+	<library>../..//testpub
 ;
 
 exe
@@ -45,7 +45,7 @@ exe
 :
 	write-file.cpp
 :
-	<library>../..//jimcpp
+	<library>../..//testpub
 ;
 
 exe
@@ -53,7 +53,7 @@ exe
 :
 	mesh-convert.cpp
 :
-	<library>../..//jimcpp
+	<library>../..//testpub
 ;
 
 exe
@@ -61,7 +61,7 @@ exe
 :
 	write-mesh.cpp
 :
-	<library>../..//jimcpp
+	<library>../..//testpub
 	<library>../..//botan-3
 ;
 
@@ -70,7 +70,7 @@ exe
 :
 	export-wave.cpp
 :
-	<library>../..//jimcpp
+	<library>../..//testpub
 	<library>../..//lyra
 	<library>../..//botan-3
 ;

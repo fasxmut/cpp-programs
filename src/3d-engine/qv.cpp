@@ -5,9 +5,9 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-// jimcpp forks irrlicht, using sfml as backend device.
+// testpub forks irrlicht, using sfml as backend device.
 
-#include <jimcpp/core.hpp>
+#include <testpub/core.hpp>
 #include <iostream>
 #include <string_view>
 #include <boost/signals2.hpp>
@@ -59,13 +59,13 @@ namespace game
 	class engine
 	{
 	public:
-		jpp::JimcppDevice * device = nullptr;
-		jpp::video::IVideoDriver * video;
-		jpp::scene::ISceneManager * scene;
-		jpp::gui::ICursorControl * cursor;
-		jpp::io::IFileSystem * fs;
-		jpp::scene::ICameraSceneNode * camera;
-		jpp::scene::IMetaTriangleSelector * meta;
+		testp::TestpubDevice * device = nullptr;
+		testp::video::IVideoDriver * video;
+		testp::scene::ISceneManager * scene;
+		testp::gui::ICursorControl * cursor;
+		testp::io::IFileSystem * fs;
+		testp::scene::ICameraSceneNode * camera;
+		testp::scene::IMetaTriangleSelector * meta;
 	private:
 		game::viewer::signal_type __signal;
 	public:
@@ -87,9 +87,9 @@ namespace game
 			std::uint32_t height__
 		):
 			device{
-				jpp::createDevice(
-					jpp::video::EDT_OPENGL,
-					jpp::core::dimension2du{
+				testp::createDevice(
+					testp::video::EDT_OPENGL,
+					testp::nub::dimension2du{
 						width__,
 						height__
 					},
@@ -130,13 +130,13 @@ namespace game
 		void run()
 		{
 			{
-				jpp::scene::ISceneNodeAnimator * collision =
+				testp::scene::ISceneNodeAnimator * collision =
 					scene->createCollisionResponseAnimator(
 						meta,
 						camera,
-						jpp::core::vector3df{40, 80, 40},
-						jpp::core::vector3df{0, -20, 0},
-						jpp::core::vector3df{0, 0, 0},
+						testp::nub::vector3df{40, 80, 40},
+						testp::nub::vector3df{0, -20, 0},
+						testp::nub::vector3df{0, 0, 0},
 						0.00001f
 					);
 				camera->addAnimator(collision);
@@ -151,7 +151,7 @@ namespace game
 			{
 				if (device->isWindowActive())
 				{
-					video->beginScene(true, true, jpp::video::SColor{0xff3399aa});
+					video->beginScene(true, true, testp::video::SColor{0xff3399aa});
 					scene->drawAll();
 					{
 						now = std::chrono::system_clock::now();
@@ -197,7 +197,7 @@ namespace game
 	private:
 		game::engine & __engine;
 		std::vector<std::string> __map_list;
-		std::vector<jpp::scene::IAnimatedMesh *> __mesh_list;
+		std::vector<testp::scene::IAnimatedMesh *> __mesh_list;
 		game::viewer::signal_type __signal;
 	public:
 		map_loader() = delete;
@@ -239,16 +239,16 @@ namespace game
 				std::uint32_t ar_count = __engine.fs->getFileArchiveCount();
 				for (std::uint32_t i=0; i<ar_count; ++i)
 				{
-					jpp::io::IFileArchive * ar = __engine.fs->getFileArchive(i);
+					testp::io::IFileArchive * ar = __engine.fs->getFileArchive(i);
 					if (ar)
 					{
-						const jpp::io::IFileList * list = ar->getFileList();
+						const testp::io::IFileList * list = ar->getFileList();
 						if (list)
 						{
 							std::uint32_t file_count = list->getFileCount();
 							for (std::uint32_t i=0; i<file_count; ++i)
 							{
-								jpp::io::path filename = list->getFileName(i);
+								testp::io::path filename = list->getFileName(i);
 								std::string name = filename.data();
 								if (name.ends_with(".bsp"))
 									__map_list.push_back(name);
@@ -274,7 +274,7 @@ namespace game
 			{
 				if (map.ends_with(".bsp"))
 				{
-					jpp::scene::IAnimatedMesh * mesh = __engine.scene->getMesh(map.data());
+					testp::scene::IAnimatedMesh * mesh = __engine.scene->getMesh(map.data());
 					if (mesh)
 						__mesh_list.push_back(mesh);
 				}
@@ -291,7 +291,7 @@ namespace game
 			bool loaded_a = false;
 			for (auto * mesh: __mesh_list)
 			{
-				jpp::scene::IOctreeSceneNode * node = __engine.scene->addOctreeSceneNode(
+				testp::scene::IOctreeSceneNode * node = __engine.scene->addOctreeSceneNode(
 					mesh->getMesh(0),
 					nullptr,
 					-1,
@@ -302,7 +302,7 @@ namespace game
 					loaded_a = true;
 				else
 					continue;
-				jpp::scene::ITriangleSelector * selector = __engine.scene->
+				testp::scene::ITriangleSelector * selector = __engine.scene->
 					createOctreeTriangleSelector(
 						node->getMesh(),
 						node,
@@ -322,28 +322,28 @@ namespace game
 		{
 			if (! map_is_loaded)
 				return;
-			for (jpp::scene::IAnimatedMesh * mesh: __mesh_list)
+			for (testp::scene::IAnimatedMesh * mesh: __mesh_list)
 			{
-				jpp::scene::IQ3LevelMesh * qmesh = static_cast<jpp::scene::IQ3LevelMesh *>(mesh);
+				testp::scene::IQ3LevelMesh * qmesh = static_cast<testp::scene::IQ3LevelMesh *>(mesh);
 				for (
-					const jpp::scene::quake3::eQ3MeshIndex qmi:
+					const testp::scene::quake3::eQ3MeshIndex qmi:
 						{
-							jpp::scene::quake3::E_Q3_MESH_GEOMETRY,
-							jpp::scene::quake3::E_Q3_MESH_ITEMS,
-							jpp::scene::quake3::E_Q3_MESH_BILLBOARD,
-							jpp::scene::quake3::E_Q3_MESH_FOG,
-							jpp::scene::quake3::E_Q3_MESH_UNRESOLVED,
-							jpp::scene::quake3::E_Q3_MESH_SIZE
+							testp::scene::quake3::E_Q3_MESH_GEOMETRY,
+							testp::scene::quake3::E_Q3_MESH_ITEMS,
+							testp::scene::quake3::E_Q3_MESH_BILLBOARD,
+							testp::scene::quake3::E_Q3_MESH_FOG,
+							testp::scene::quake3::E_Q3_MESH_UNRESOLVED,
+							testp::scene::quake3::E_Q3_MESH_SIZE
 						}
 				)
 				{
 					std::cout << "index: " << qmi;
-					if (qmi == jpp::scene::quake3::E_Q3_MESH_SIZE)
+					if (qmi == testp::scene::quake3::E_Q3_MESH_SIZE)
 					{
 						std::cout << std::endl;
 						continue;
 					}
-					jpp::scene::IMesh * imesh = qmesh->getMesh(qmi);
+					testp::scene::IMesh * imesh = qmesh->getMesh(qmi);
 					if (imesh)
 					{
 						std::uint32_t mb_count = imesh->getMeshBufferCount();
@@ -351,8 +351,8 @@ namespace game
 					}
 				}
 				{
-					jpp::scene::IMesh * item_mesh
-						= qmesh->getMesh(jpp::scene::quake3::E_Q3_MESH_ITEMS);
+					testp::scene::IMesh * item_mesh
+						= qmesh->getMesh(testp::scene::quake3::E_Q3_MESH_ITEMS);
 					if (! item_mesh)
 						continue;
 					std::uint32_t mb_count = item_mesh->getMeshBufferCount();
@@ -360,21 +360,21 @@ namespace game
 						continue;
 					for (std::uint32_t i=0; i<mb_count; ++i)
 					{
-						jpp::scene::IMeshBuffer * mb = item_mesh->getMeshBuffer(i);
+						testp::scene::IMeshBuffer * mb = item_mesh->getMeshBuffer(i);
 						if (! mb)
 							continue;
-						jpp::video::SMaterial & material = mb->getMaterial();
+						testp::video::SMaterial & material = mb->getMaterial();
 						int shader_index = (int)material.MaterialTypeParam2;
-						const jpp::scene::quake3::IShader * shader =
+						const testp::scene::quake3::IShader * shader =
 							qmesh->getShader(shader_index);
-						jpp::scene::IMeshSceneNode * node = __engine.scene->addQuake3SceneNode(
+						testp::scene::IMeshSceneNode * node = __engine.scene->addQuake3SceneNode(
 							mb,
 							shader,
 							nullptr,
 							-1
 						);
 						this->signal("map loader: Items are added");
-						jpp::scene::ITriangleSelector * selector =
+						testp::scene::ITriangleSelector * selector =
 							__engine.scene->createTriangleSelector(
 								node->getMesh(),
 								node,
@@ -394,9 +394,9 @@ namespace game
 				return;
 			for (auto * mesh: __mesh_list)
 			{
-				jpp::scene::quake3::tQ3EntityList & qe_list =
-					static_cast<jpp::scene::IQ3LevelMesh *>(mesh)->getEntityList();
-				jpp::scene::quake3::IEntity search;
+				testp::scene::quake3::tQ3EntityList & qe_list =
+					static_cast<testp::scene::IQ3LevelMesh *>(mesh)->getEntityList();
+				testp::scene::quake3::IEntity search;
 				search.name = "info_player_deathmatch";
 				std::int32_t s_pos = 0;
 				s_pos = qe_list.binary_search_multi(search, s_pos);
@@ -406,20 +406,20 @@ namespace game
 					return;
 				}
 				// else
-				jpp::scene::quake3::IEntity & entity = qe_list[s_pos];
+				testp::scene::quake3::IEntity & entity = qe_list[s_pos];
 				int gsize = entity.getGroupSize();
 				std::cout << "gsize: " << gsize << std::endl;
 				BOOST_ASSERT(gsize >= 2);
-				const jpp::scene::quake3::SVarGroup * g = entity.getGroup(1);
-				jpp::core::string pos_str = g->get("origin");
-				jpp::core::string angle_str = g->get("angle");
+				const testp::scene::quake3::SVarGroup * g = entity.getGroup(1);
+				testp::nub::string pos_str = g->get("origin");
+				testp::nub::string angle_str = g->get("angle");
 				std::uint32_t p_pos = 0;
-				jpp::core::vector3df pos = jpp::scene::quake3::getAsVector3df(pos_str, p_pos);
+				testp::nub::vector3df pos = testp::scene::quake3::getAsVector3df(pos_str, p_pos);
 				p_pos = 0;
-				std::float32_t angle = jpp::scene::quake3::getAsFloat(angle_str, p_pos);
+				std::float32_t angle = testp::scene::quake3::getAsFloat(angle_str, p_pos);
 				__engine.camera->setPosition(pos);
 				this->signal("map loader: Player is added");
-				jpp::core::vector3df dir{0, 0, 1};
+				testp::nub::vector3df dir{0, 0, 1};
 				dir.rotateXZBy(angle);
 				__engine.camera->setTarget(pos + dir);
 			}

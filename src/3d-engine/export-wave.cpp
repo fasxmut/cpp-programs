@@ -10,7 +10,7 @@
 // export-wave --help
 // export-wave -t ./export-wave.texture.png -l true -c 0xffff9900 -r 12 -R 6 -i 2 -e .b3d
 
-#include <jimcpp/core.hpp>
+#include <testpub/core.hpp>
 #include <iostream>
 #include <future>
 #include <chrono>
@@ -81,7 +81,7 @@ namespace my_cpp
 	};
 
 	class wave_mesh:
-		virtual public jpp::scene::SMesh,
+		virtual public testp::scene::SMesh,
 		virtual public my_cpp::event
 	{
 	private:
@@ -104,14 +104,14 @@ namespace my_cpp
 		void init()
 		{
 			{
-				auto mesh_buffer = new jpp::scene::SMeshBuffer;
+				auto mesh_buffer = new testp::scene::SMeshBuffer;
 				this->addMeshBuffer(mesh_buffer);
 				mesh_buffer->drop();
 			}
 			{
 			/////////////////	Section: create vertices
-				jpp::scene::SMeshBuffer * mesh_buffer =
-					static_cast<jpp::scene::SMeshBuffer *>(this->getMeshBuffer(0));
+				testp::scene::SMeshBuffer * mesh_buffer =
+					static_cast<testp::scene::SMeshBuffer *>(this->getMeshBuffer(0));
 
 				const float x_start = -radius;
 				const float x_end = radius;
@@ -135,7 +135,7 @@ namespace my_cpp
 					return (z_end - z) / z_len;
 				};
 
-				std::vector<jpp::video::S3DVertex> vertices;
+				std::vector<testp::video::S3DVertex> vertices;
 				for (float z=z_start; z<=z_end; z+=dz)
 				{
 					++z_count;
@@ -151,7 +151,7 @@ namespace my_cpp
 					<< "total: " << x_count * z_count << "\n\n";
 
 			/////////////////	Section: create indices
-				std::vector<jpp::u16> indices;
+				std::vector<testp::u16> indices;
 				for (int j=0; j<z_count-1; ++j)
 				{
 					for (int i=0; i<x_count-1; ++i)
@@ -185,7 +185,7 @@ namespace my_cpp
 				{
 					for (int i=0; i<x_count-1; ++i)
 					{
-						auto points = new std::vector<jpp::core::vector3df>;
+						auto points = new std::vector<testp::nub::vector3df>;
 						points->resize(0);
 						int linear = j*x_count + i;
 
@@ -193,9 +193,9 @@ namespace my_cpp
 						points->push_back(vertices[linear+x_count].Pos);
 						points->push_back(vertices[linear+1].Pos);
 
-						jpp::core::vector3df dir1 = points->at(1) - points->at(0);
-						jpp::core::vector3df dir2 = points->at(2) - points->at(0);
-						jpp::core::vector3df normal = dir1.crossProduct(dir2);
+						testp::nub::vector3df dir1 = points->at(1) - points->at(0);
+						testp::nub::vector3df dir2 = points->at(2) - points->at(0);
+						testp::nub::vector3df normal = dir1.crossProduct(dir2);
 						if (normal.Y < 0)
 							normal = -normal;
 						normal.normalize();
@@ -239,25 +239,25 @@ namespace my_cpp
 		}
 	public:
 		void export_mesh(
-			jpp::scene::IMeshSceneNode * node__,
-			jpp::scene::EMESH_WRITER_TYPE type__, 
+			testp::scene::IMeshSceneNode * node__,
+			testp::scene::EMESH_WRITER_TYPE type__, 
 			const std::string & filename__
 		)
 		{
-			jpp::scene::IMeshWriter * mw = node__->getSceneManager()->createMeshWriter(
+			testp::scene::IMeshWriter * mw = node__->getSceneManager()->createMeshWriter(
 				type__
 			);
-			jpp::io::IWriteFile * file = node__->getSceneManager()->getFileSystem()->createAndWriteFile(filename__.data(), false);
+			testp::io::IWriteFile * file = node__->getSceneManager()->getFileSystem()->createAndWriteFile(filename__.data(), false);
 
-			jpp::scene::E_MESH_WRITER_FLAGS flags = jpp::scene::EMWF_NONE;
-			if (type__ == jpp::scene::EMWT_B3D)
+			testp::scene::E_MESH_WRITER_FLAGS flags = testp::scene::EMWF_NONE;
+			if (type__ == testp::scene::EMWT_B3D)
 				flags =
-					static_cast<jpp::scene::E_MESH_WRITER_FLAGS>(jpp::scene::EMWF_WRITE_COMPRESSED | jpp::scene::EMWF_WRITE_BINARY);
-			else if (type__ == jpp::scene::EMWT_IRR_MESH)
-				flags = jpp::scene::EMWF_NONE;
+					static_cast<testp::scene::E_MESH_WRITER_FLAGS>(testp::scene::EMWF_WRITE_COMPRESSED | testp::scene::EMWF_WRITE_BINARY);
+			else if (type__ == testp::scene::EMWT_IRR_MESH)
+				flags = testp::scene::EMWF_NONE;
 			mw->writeMesh(
 				file,
-				static_cast<jpp::scene::SMesh *>(node__->getMesh()),
+				static_cast<testp::scene::SMesh *>(node__->getMesh()),
 				flags
 			);
 			mw->drop();
@@ -318,17 +318,17 @@ try
 	}
 
 	arg.print();
-	jpp::scene::EMESH_WRITER_TYPE export_type;
+	testp::scene::EMESH_WRITER_TYPE export_type;
 	std::string export_filename;
 	if (arg.export_type == ".b3d")
 	{
-		export_type = jpp::scene::EMWT_B3D;
+		export_type = testp::scene::EMWT_B3D;
 		export_filename = "export-wave.b3d";
 	}
 	/*
 	else if (arg.export_type == ".irrmesh")
 	{
-		export_type  = jpp::scene::EMWT_IRR_MESH;
+		export_type  = testp::scene::EMWT_IRR_MESH;
 		export_filename = "export-wave.irrmesh";
 	}
 	*/
@@ -341,7 +341,7 @@ try
 	my_cpp::viewer viewer;
 
 	{
-		auto device = jpp::createDevice(jpp::video::EDT_OPENGL, jpp::core::dimension2du{100,100});
+		auto device = testp::createDevice(testp::video::EDT_OPENGL, testp::nub::dimension2du{100,100});
 		auto scene = device->getSceneManager();
 		auto video = device->getVideoDriver();
 		auto camera = scene->addCameraSceneNodeFPS(
@@ -372,7 +372,7 @@ try
 		{
 			std::cout << "mesh buffer count: " << wave->getMesh()->getMeshBufferCount()
 				<< std::endl;
-			wave->setMaterialFlag(jpp::video::EMF_LIGHTING, arg.lighting);
+			wave->setMaterialFlag(testp::video::EMF_LIGHTING, arg.lighting);
 			if (arg.texture.ends_with(".png") || arg.texture.ends_with(".jpg"))
 				wave->setMaterialTexture(0, video->getTexture(arg.texture.data()));
 
@@ -386,8 +386,8 @@ try
 		if (arg.lighting)
 			scene->addLightSceneNode(
 				camera,
-				jpp::core::vector3df{0},
-				jpp::video::SColor{Botan::BigInt{arg.light_color}.to_u32bit()},
+				testp::nub::vector3df{0},
+				testp::video::SColor{Botan::BigInt{arg.light_color}.to_u32bit()},
 				arg.Radius,
 				-1
 			);
@@ -402,18 +402,18 @@ try
 		device->drop();
 	}
 	{
-		jpp::JimcppDevice * device = jpp::createDevice(
-			jpp::video::EDT_OPENGL,
-			jpp::core::dimension2du{1925, 1085},
+		testp::TestpubDevice * device = testp::createDevice(
+			testp::video::EDT_OPENGL,
+			testp::nub::dimension2du{1925, 1085},
 			32,
 			false,
 			true,
 			false,
 			nullptr
 		);
-		jpp::scene::ISceneManager * scene = device->getSceneManager();
-		jpp::video::IVideoDriver * video = device->getVideoDriver();
-		jpp::scene::ICameraSceneNode * camera = scene->addCameraSceneNodeFPS(
+		testp::scene::ISceneManager * scene = device->getSceneManager();
+		testp::video::IVideoDriver * video = device->getVideoDriver();
+		testp::scene::ICameraSceneNode * camera = scene->addCameraSceneNodeFPS(
 			nullptr,
 			30.0f,
 			0.005f,
@@ -428,18 +428,18 @@ try
 		camera->setPosition({0,arg.height*2, -arg.radius*1.2f});
 		camera->setTarget({0, -arg.height, 0});
 		device->getCursorControl()->setVisible(false);
-		jpp::scene::IAnimatedMeshSceneNode * node = scene->addAnimatedMeshSceneNode(
+		testp::scene::IAnimatedMeshSceneNode * node = scene->addAnimatedMeshSceneNode(
 			scene->getMesh(export_filename.data()),
 			nullptr,
 			-1,
-			jpp::core::vector3df{0},
-			jpp::core::vector3df{0},
-			jpp::core::vector3df{1},
+			testp::nub::vector3df{0},
+			testp::nub::vector3df{0},
+			testp::nub::vector3df{1},
 			false
 		);
 		if (node)
 		{
-			node->setMaterialFlag(jpp::video::EMF_LIGHTING, arg.lighting);
+			node->setMaterialFlag(testp::video::EMF_LIGHTING, arg.lighting);
 			if (arg.texture.ends_with(".png") || arg.texture.ends_with(".jpg"))
 				node->setMaterialTexture(0, video->getTexture(arg.texture.data()));
 			{
@@ -466,24 +466,24 @@ try
 		if (arg.lighting)
 			scene->addLightSceneNode(
 				camera,
-				jpp::core::vector3df{0,0,0},
-				jpp::video::SColor{Botan::BigInt{arg.light_color}.to_u32bit()},
+				testp::nub::vector3df{0,0,0},
+				testp::video::SColor{Botan::BigInt{arg.light_color}.to_u32bit()},
 				arg.Radius,
 				-1
 			);
 
-		jpp::scene::ITriangleSelector * selector = scene->createOctreeTriangleSelector(
+		testp::scene::ITriangleSelector * selector = scene->createOctreeTriangleSelector(
 			node->getMesh(),
 			node,
 			1024
 		);
 		node->setTriangleSelector(selector);
-		jpp::scene::ISceneNodeAnimator * collision = scene->createCollisionResponseAnimator(
+		testp::scene::ISceneNodeAnimator * collision = scene->createCollisionResponseAnimator(
 			selector,
 			camera,
-			jpp::core::vector3df{arg.radius / 8, arg.radius / 5, arg.radius / 8},
-			jpp::core::vector3df{0,0,0},
-			jpp::core::vector3df{0,0,0},
+			testp::nub::vector3df{arg.radius / 8, arg.radius / 5, arg.radius / 8},
+			testp::nub::vector3df{0,0,0},
+			testp::nub::vector3df{0,0,0},
 			0.001f
 		);
 		selector->drop();
@@ -492,8 +492,8 @@ try
 		while (device->run())
 		{
 			video->beginScene(
-				jpp::video::ECBF_COLOR | jpp::video::ECBF_DEPTH | jpp::video::ECBF_STENCIL,
-				jpp::video::SColor{0xff123456}
+				testp::video::ECBF_COLOR | testp::video::ECBF_DEPTH | testp::video::ECBF_STENCIL,
+				testp::video::SColor{0xff123456}
 			);
 			scene->drawAll();
 			video->endScene();

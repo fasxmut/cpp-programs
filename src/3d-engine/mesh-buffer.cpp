@@ -5,14 +5,14 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <jimcpp/core.hpp>
+#include <testpub/core.hpp>
 #include <iostream>
 #include <vector>
 
 namespace my_mesh
 {
 	class cube_mesh:
-		virtual public jpp::scene::SMesh
+		virtual public testp::scene::SMesh
 	{
 	public:
 		cube_mesh()
@@ -27,7 +27,7 @@ namespace my_mesh
 	protected:
 		inline void create()
 		{
-			std::vector<jpp::video::S3DVertex> vertices{
+			std::vector<testp::video::S3DVertex> vertices{
 				{10, -10, -10,    1,-1,-1,    0xffff0000,    0.5,1},	// 0
 				{10,10,-10,    1,1,-1,    0xffff9999,    0.5,0.5},	// 1
 				{-10,10,-10,    -1,1,-1,    0xff00ff00,    0,0.5},	// 2
@@ -37,7 +37,7 @@ namespace my_mesh
 				{-10,10,10,    -1,1,1,    0xff00ff00,    0.5,0},	// 6
 				{-10,-10,10,    -1,-1,1,    0xff00ffff,    0.5,0.5}	// 7
 			};
-			std::vector<jpp::u16> indices{
+			std::vector<testp::u16> indices{
 				0,2,1,
 				0,3,2,
 				0,5,4,
@@ -51,7 +51,7 @@ namespace my_mesh
 				0,7,3,
 				0,4,7
 			};
-			auto buffer = new jpp::scene::SMeshBuffer;
+			auto buffer = new testp::scene::SMeshBuffer;
 			buffer->append(
 				vertices.data(),
 				vertices.size(),
@@ -76,9 +76,9 @@ try
 		throw std::runtime_error{"Arguments error"};
 	}
 	std::string texture = argv[1];
-	jpp::JimcppDevice * device = jpp::createDevice(
-		jpp::video::EDT_OPENGL,
-		jpp::core::dimension2du{1925, 1085},
+	testp::TestpubDevice * device = testp::createDevice(
+		testp::video::EDT_OPENGL,
+		testp::nub::dimension2du{1925, 1085},
 		32,
 		false,
 		true,
@@ -95,9 +95,9 @@ try
 		cube_mesh,
 		nullptr,
 		-1,
-		jpp::core::vector3df{0},
-		jpp::core::vector3df{0},
-		jpp::core::vector3df{1},
+		testp::nub::vector3df{0},
+		testp::nub::vector3df{0},
+		testp::nub::vector3df{1},
 		false
 	);
 	cube_mesh->drop();
@@ -105,12 +105,12 @@ try
 
 	if (node)
 	{
-		jpp::u32 mb_count = node->getMesh()->getMeshBufferCount();
+		testp::u32 mb_count = node->getMesh()->getMeshBufferCount();
 		std::cout << "mb_count = " << mb_count << std::endl;
 		if (mb_count > 0)
 		{
-			node->setMaterialFlag(jpp::video::EMF_LIGHTING, true);
-			node->setMaterialFlag(jpp::video::EMF_BACK_FACE_CULLING, true);
+			node->setMaterialFlag(testp::video::EMF_LIGHTING, true);
+			node->setMaterialFlag(testp::video::EMF_BACK_FACE_CULLING, true);
 			bool enable_texture = true;
 			if (enable_texture)
 				node->setMaterialTexture(0, video->getTexture(texture.data()));
@@ -131,17 +131,17 @@ try
 		false,
 		true
 	);
-	camera->setPosition(jpp::core::vector3df{25, 15, -25});
-	camera->setTarget(jpp::core::vector3df{0, 0, 0});
+	camera->setPosition(testp::nub::vector3df{25, 15, -25});
+	camera->setTarget(testp::nub::vector3df{0, 0, 0});
 
-	jpp::scene::ILightSceneNode * light = scene->addLightSceneNode(
+	testp::scene::ILightSceneNode * light = scene->addLightSceneNode(
 		camera,
-		jpp::core::vector3df{0},
-		jpp::video::SColor{0xff787878},
+		testp::nub::vector3df{0},
+		testp::video::SColor{0xff787878},
 		1000,
 		-1
 	);
-	light->setPosition(jpp::core::vector3df{0});
+	light->setPosition(testp::nub::vector3df{0});
 	device->getCursorControl()->setVisible(false);
 
 	while (device->run())
@@ -149,8 +149,8 @@ try
 		if (device->isWindowActive())
 		{
 			video->beginScene(
-				jpp::video::ECBF_COLOR | jpp::video::ECBF_DEPTH | jpp::video::ECBF_STENCIL,
-				jpp::video::SColor{0xff123456}
+				testp::video::ECBF_COLOR | testp::video::ECBF_DEPTH | testp::video::ECBF_STENCIL,
+				testp::video::SColor{0xff123456}
 			);
 			scene->drawAll();
 			video->endScene();

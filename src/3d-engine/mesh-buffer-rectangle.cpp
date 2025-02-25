@@ -6,14 +6,14 @@
 //
 
 #include <iostream>
-#include <jimcpp/core.hpp>
+#include <testpub/core.hpp>
 #include <vector>
 
 using std::string_literals::operator""s;
 
 namespace my_mesh
 {
-	class rectangle_mesh: virtual public jpp::scene::SMesh
+	class rectangle_mesh: virtual public testp::scene::SMesh
 	{
 	private:
 		bool __reverse_order;
@@ -31,25 +31,25 @@ namespace my_mesh
 	protected:
 		inline void create()
 		{
-			std::vector<jpp::video::S3DVertex> vertices{
+			std::vector<testp::video::S3DVertex> vertices{
 				{10,-10,0,    0,0,-1,    0xffff0000,    1,1},
 				{10,10,0,    0,0,-1,    0xff00ff00,    1,0},
 				{-10,10,0,    0,0,-1,    0xff0000ff,    0,0},
 				{-10,-10,0,    0,0,-1,    0xffffffff,    0,1}
 			};
-			std::vector<jpp::u16> indices;
+			std::vector<testp::u16> indices;
 
 			if (__reverse_order)
-				indices = std::vector<jpp::u16>{
+				indices = std::vector<testp::u16>{
 					0,1,2,
 					0,2,3,
 				};
 			else
-				indices = std::vector<jpp::u16>{
+				indices = std::vector<testp::u16>{
 					0,2,1,
 					0,3,2
 				};
-			auto buffer = new jpp::scene::SMeshBuffer;
+			auto buffer = new testp::scene::SMeshBuffer;
 			buffer->append(
 				vertices.data(),
 				vertices.size(),
@@ -101,9 +101,9 @@ try
 	if (argc > 4)
 		throw std::runtime_error{"arguments error"};
 
-	jpp::JimcppDevice * device = jpp::createDevice(
-		jpp::video::EDT_OPENGL,
-		jpp::core::dimension2du{1925, 1085},
+	testp::TestpubDevice * device = testp::createDevice(
+		testp::video::EDT_OPENGL,
+		testp::nub::dimension2du{1925, 1085},
 		32,
 		false,
 		true,
@@ -144,12 +144,12 @@ try
 
 	if (node)
 	{
-		jpp::s32 mb_count = node->getMesh()->getMeshBufferCount();
+		testp::i32 mb_count = node->getMesh()->getMeshBufferCount();
 		std::cout << "mb_count: " << mb_count << std::endl;
 		if (mb_count > 0)
 		{
-			node->setMaterialFlag(jpp::video::EMF_LIGHTING, false);
-			node->setMaterialFlag(jpp::video::EMF_BACK_FACE_CULLING, enable_back_face_culling);
+			node->setMaterialFlag(testp::video::EMF_LIGHTING, false);
+			node->setMaterialFlag(testp::video::EMF_BACK_FACE_CULLING, enable_back_face_culling);
 			if (! texture_fn.empty())
 			{
 				node->setMaterialTexture(0, video->getTexture(texture_fn.data()));
@@ -166,8 +166,8 @@ try
 		if (device->isWindowActive())
 		{
 			video->beginScene(
-				jpp::video::ECBF_COLOR | jpp::video::ECBF_DEPTH | jpp::video::ECBF_STENCIL,
-				jpp::video::SColor{0xff123456}
+				testp::video::ECBF_COLOR | testp::video::ECBF_DEPTH | testp::video::ECBF_STENCIL,
+				testp::video::SColor{0xff123456}
 			);
 			scene->drawAll();
 			video->endScene();

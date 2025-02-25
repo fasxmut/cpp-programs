@@ -5,7 +5,7 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <jimcpp/core.hpp>
+#include <testpub/core.hpp>
 #include <botan/bigint.h>
 #include <iostream>
 
@@ -24,13 +24,13 @@ try
 		throw std::runtime_error{"Arguments Error"};
 	}
 
-	const jpp::video::SColor light_color = Botan::BigInt{argv[1]}.to_u32bit();
-	const jpp::u32 light_radius = Botan::BigInt{argv[2]}.to_u32bit();
+	const testp::video::SColor light_color = Botan::BigInt{argv[1]}.to_u32bit();
+	const testp::u32 light_radius = Botan::BigInt{argv[2]}.to_u32bit();
 	const std::string model = argv[3];
 
-	jpp::JimcppDevice * device = jpp::createDevice(
-		jpp::video::EDT_OPENGL,
-		jpp::core::dimension2du{1925, 1085},
+	testp::TestpubDevice * device = testp::createDevice(
+		testp::video::EDT_OPENGL,
+		testp::nub::dimension2du{1925, 1085},
 		32,
 		false,
 		true,
@@ -41,10 +41,10 @@ try
 	if (! device)
 		throw std::runtime_error{"can not open rendering window"};
 
-	jpp::video::IVideoDriver * video = device->getVideoDriver();
-	jpp::scene::ISceneManager * scene = device->getSceneManager();
+	testp::video::IVideoDriver * video = device->getVideoDriver();
+	testp::scene::ISceneManager * scene = device->getSceneManager();
 
-	jpp::scene::ICameraSceneNode * camera = scene->addCameraSceneNodeFPS(
+	testp::scene::ICameraSceneNode * camera = scene->addCameraSceneNodeFPS(
 		nullptr,
 		15.0f,
 		0.05f,
@@ -56,24 +56,24 @@ try
 		false,
 		true
 	);
-	camera->setPosition(jpp::core::vector3df{20, 20, -70});
-	camera->setTarget(jpp::core::vector3df{0});
+	camera->setPosition(testp::nub::vector3df{20, 20, -70});
+	camera->setTarget(testp::nub::vector3df{0});
 	device->getCursorControl()->setVisible(false);
 
-	jpp::scene::IAnimatedMeshSceneNode * node = scene->addAnimatedMeshSceneNode(
+	testp::scene::IAnimatedMeshSceneNode * node = scene->addAnimatedMeshSceneNode(
 		scene->getMesh(model.data()),
 		nullptr,
 		-1,
-		jpp::core::vector3df{0},
-		jpp::core::vector3df{0},
-		jpp::core::vector3df{1},
+		testp::nub::vector3df{0},
+		testp::nub::vector3df{0},
+		testp::nub::vector3df{1},
 		false
 	);
-	node->setMaterialFlag(jpp::video::EMF_LIGHTING, true);
+	node->setMaterialFlag(testp::video::EMF_LIGHTING, true);
 
 	scene->addLightSceneNode(
 		camera,	// attach light to camera
-		jpp::core::vector3df{0, 0, 0},	// position relative to camera
+		testp::nub::vector3df{0, 0, 0},	// position relative to camera
 		light_color,
 		light_radius,
 		-1
@@ -84,13 +84,13 @@ try
 		if (device->isWindowActive())
 		{
 			video->beginScene(
-				jpp::video::ECBF_COLOR
+				testp::video::ECBF_COLOR
 				|
-				jpp::video::ECBF_DEPTH
+				testp::video::ECBF_DEPTH
 				|
-				jpp::video::ECBF_STENCIL
+				testp::video::ECBF_STENCIL
 				,
-				jpp::video::SColor{0xff123456}
+				testp::video::SColor{0xff123456}
 			);
 			scene->drawAll();
 			video->endScene();

@@ -146,10 +146,10 @@ lib
 # 3D engine
 
 lib
-	jimcpp
+	testpub
 :
 :
-	<name>jimcpp-core
+	<name>testpub-core
 ;
 
 ######################################################################

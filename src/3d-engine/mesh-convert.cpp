@@ -5,12 +5,12 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <jimcpp/core.hpp>
+#include <testpub/core.hpp>
 #include <iostream>
 
 using std::string_literals::operator""s;
 
-jpp::JimcppDevice * device = nullptr;
+testp::TestpubDevice * device = nullptr;
 
 int main(int argc, char * argv[])
 try
@@ -55,10 +55,10 @@ try
 	{
 		if (device)
 			device->drop();
-		device = jpp::createDevice(jpp::video::EDT_NULL);
+		device = testp::createDevice(testp::video::EDT_NULL);
 		auto fs = device->getFileSystem();
 		auto scene = device->getSceneManager();
-		jpp::scene::IAnimatedMesh * mesh = scene->getMesh(input.data());
+		testp::scene::IAnimatedMesh * mesh = scene->getMesh(input.data());
 		if (! mesh)
 			throw std::runtime_error{"Mesh Error: Invalid input mesh, is it correct?"};
 		if (mesh->getMeshBufferCount() < 1)
@@ -67,17 +67,17 @@ try
 		std::cout << "Input mesh is loaded\n";
 		std::cout << "----------------------------------------\n\n";
 
-		jpp::scene::IMeshWriter * mesh_writer = scene->createMeshWriter(
-			jpp::scene::EMWT_B3D
+		testp::scene::IMeshWriter * mesh_writer = scene->createMeshWriter(
+			testp::scene::EMWT_B3D
 		);
-		jpp::io::IWriteFile * out_file = fs->createAndWriteFile(output.data(), false);
+		testp::io::IWriteFile * out_file = fs->createAndWriteFile(output.data(), false);
 		bool status = false;
 		if (binary)
 		{
 			status = mesh_writer->writeMesh(
 				out_file,
 				mesh->getMesh(0),
-				jpp::scene::EMWF_WRITE_BINARY | jpp::scene::EMWF_WRITE_COMPRESSED
+				testp::scene::EMWF_WRITE_BINARY | testp::scene::EMWF_WRITE_COMPRESSED
 			);
 		}
 		else
@@ -85,7 +85,7 @@ try
 			status = mesh_writer->writeMesh(
 				out_file,
 				mesh->getMesh(0),
-				jpp::scene::EMWF_WRITE_COMPRESSED
+				testp::scene::EMWF_WRITE_COMPRESSED
 			);
 		}
 
@@ -120,38 +120,38 @@ try
 	{
 		if (device)
 			device->drop();
-		device = jpp::createDevice(
-			jpp::video::EDT_OPENGL,
-			jpp::core::dimension2du{1925, 1085},
+		device = testp::createDevice(
+			testp::video::EDT_OPENGL,
+			testp::nub::dimension2du{1925, 1085},
 			32,
 			false,
 			true,
 			false,
 			nullptr
 		);
-		jpp::scene::ISceneManager * scene = device->getSceneManager();
-		jpp::video::IVideoDriver * video = device->getVideoDriver();
+		testp::scene::ISceneManager * scene = device->getSceneManager();
+		testp::video::IVideoDriver * video = device->getVideoDriver();
 
-		jpp::scene::IAnimatedMesh * mesh = scene->getMesh(output.data());
+		testp::scene::IAnimatedMesh * mesh = scene->getMesh(output.data());
 		if (! mesh || mesh->getMesh(0)->getMeshBufferCount() < 1)
 			throw std::runtime_error{"Mesh Error: can not open mesh or mesh is empty !"};
 		// else
 		std::cout << "Found mesh buffer (for first frame) count: "
 			<< mesh->getMesh(0)->getMeshBufferCount() << std::endl;
-		jpp::scene::IAnimatedMeshSceneNode * node = scene->addAnimatedMeshSceneNode(
+		testp::scene::IAnimatedMeshSceneNode * node = scene->addAnimatedMeshSceneNode(
 			mesh,
 			nullptr,
 			-1,
-			jpp::core::vector3df{0},
-			jpp::core::vector3df{0},
-			jpp::core::vector3df{1},
+			testp::nub::vector3df{0},
+			testp::nub::vector3df{0},
+			testp::nub::vector3df{1},
 			false
 		);
 		if (node)
 		{
-			node->setMaterialFlag(jpp::video::EMF_LIGHTING, true);
+			node->setMaterialFlag(testp::video::EMF_LIGHTING, true);
 		}
-		jpp::scene::ICameraSceneNode * camera = scene->addCameraSceneNodeFPS(
+		testp::scene::ICameraSceneNode * camera = scene->addCameraSceneNodeFPS(
 			nullptr,
 			20.0f,
 			0.05f,
@@ -168,8 +168,8 @@ try
 		device->getCursorControl()->setVisible(false);
 		scene->addLightSceneNode(
 			camera,
-			jpp::core::vector3df{0},
-			jpp::video::SColor{0xff00ff00},
+			testp::nub::vector3df{0},
+			testp::video::SColor{0xff00ff00},
 			10000,
 			-1
 		);
@@ -178,8 +178,8 @@ try
 			if (device->isWindowActive())
 			{
 				video->beginScene(
-					jpp::video::ECBF_COLOR | jpp::video::ECBF_DEPTH | jpp::video::ECBF_STENCIL,
-					jpp::video::SColor{0xff123456}
+					testp::video::ECBF_COLOR | testp::video::ECBF_DEPTH | testp::video::ECBF_STENCIL,
+					testp::video::SColor{0xff123456}
 				);
 				scene->drawAll();
 				video->endScene();
