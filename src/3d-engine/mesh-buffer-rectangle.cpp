@@ -37,15 +37,15 @@ namespace my_mesh
 				{-10,10,0,    0,0,-1,    0xff0000ff,    0,0},
 				{-10,-10,0,    0,0,-1,    0xffffffff,    0,1}
 			};
-			std::vector<testp::u16> indices;
+			std::vector<testp::uint16_kt> indices;
 
 			if (__reverse_order)
-				indices = std::vector<testp::u16>{
+				indices = std::vector<testp::uint16_kt>{
 					0,1,2,
 					0,2,3,
 				};
 			else
-				indices = std::vector<testp::u16>{
+				indices = std::vector<testp::uint16_kt>{
 					0,2,1,
 					0,3,2
 				};
@@ -144,7 +144,7 @@ try
 
 	if (node)
 	{
-		testp::i32 mb_count = node->getMesh()->getMeshBufferCount();
+		testp::int32_kt mb_count = node->getMesh()->getMeshBufferCount();
 		std::cout << "mb_count: " << mb_count << std::endl;
 		if (mb_count > 0)
 		{

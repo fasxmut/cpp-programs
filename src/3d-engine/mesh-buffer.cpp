@@ -37,7 +37,7 @@ namespace my_mesh
 				{-10,10,10,    -1,1,1,    0xff00ff00,    0.5,0},	// 6
 				{-10,-10,10,    -1,-1,1,    0xff00ffff,    0.5,0.5}	// 7
 			};
-			std::vector<testp::u16> indices{
+			std::vector<testp::uint16_kt> indices{
 				0,2,1,
 				0,3,2,
 				0,5,4,
@@ -105,7 +105,7 @@ try
 
 	if (node)
 	{
-		testp::u32 mb_count = node->getMesh()->getMeshBufferCount();
+		testp::uint32_kt mb_count = node->getMesh()->getMeshBufferCount();
 		std::cout << "mb_count = " << mb_count << std::endl;
 		if (mb_count > 0)
 		{
