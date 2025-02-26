@@ -31,7 +31,7 @@ namespace cpp
 		}
 	public:
 		engine() = delete;
-		engine(testp::uint32_kt width__, testp::uint32_kt height__):
+		engine(testp::uint32_pub width__, testp::uint32_pub height__):
 			__device{
 				testp::createDevice(
 					testp::video::EDT_OPENGL,
@@ -165,7 +165,7 @@ namespace cpp
 				{0,20,0,		0,0,1,		0xffffff00,		1,0},	// 11
 			};
 
-			std::vector<testp::uint16_kt> indices{
+			std::vector<testp::uint16_pub> indices{
 				0,1,2,
 				3,4,5,
 				6,7,8,

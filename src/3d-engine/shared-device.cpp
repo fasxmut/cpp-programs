@@ -111,7 +111,7 @@ public:
 public:
 	virtual void run()
 	{
-		constexpr testp::uint16_kt all_flags = testp::video::ECBF_COLOR | testp::video::ECBF_DEPTH | testp::video::ECBF_STENCIL;
+		constexpr testp::uint16_pub all_flags = testp::video::ECBF_COLOR | testp::video::ECBF_DEPTH | testp::video::ECBF_STENCIL;
 		std::cout << "Looping ..." << std::endl;
 		while (self.run_device())
 		{

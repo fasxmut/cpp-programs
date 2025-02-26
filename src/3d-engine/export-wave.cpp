@@ -151,7 +151,7 @@ namespace my_cpp
 					<< "total: " << x_count * z_count << "\n\n";
 
 			/////////////////	Section: create indices
-				std::vector<testp::uint16_kt> indices;
+				std::vector<testp::uint16_pub> indices;
 				for (int j=0; j<z_count-1; ++j)
 				{
 					for (int i=0; i<x_count-1; ++i)

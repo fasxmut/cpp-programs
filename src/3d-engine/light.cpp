@@ -25,7 +25,7 @@ try
 	}
 
 	const testp::video::SColor light_color = Botan::BigInt{argv[1]}.to_u32bit();
-	const testp::uint32_kt light_radius = Botan::BigInt{argv[2]}.to_u32bit();
+	const testp::uint32_pub light_radius = Botan::BigInt{argv[2]}.to_u32bit();
 	const std::string model = argv[3];
 
 	testp::TestpubDevice * device = testp::createDevice(
