@@ -33,7 +33,7 @@ namespace cpp
 		engine() = delete;
 		engine(testp::uint32_pub width__, testp::uint32_pub height__):
 			__device{
-				testp::createDevice(
+				testp::createPub(
 					testp::video::EDT_OPENGL,
 					testp::nub::dimension2du{width__, height__},
 					32,

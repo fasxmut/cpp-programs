@@ -76,7 +76,7 @@ try
 		throw std::runtime_error{"Arguments error"};
 	}
 	std::string texture = argv[1];
-	testp::TestpubDevice * device = testp::createDevice(
+	testp::TestpubDevice * device = testp::createPub(
 		testp::video::EDT_OPENGL,
 		testp::nub::dimension2du{1925, 1085},
 		32,

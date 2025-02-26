@@ -101,7 +101,7 @@ try
 	if (argc > 4)
 		throw std::runtime_error{"arguments error"};
 
-	testp::TestpubDevice * device = testp::createDevice(
+	testp::TestpubDevice * device = testp::createPub(
 		testp::video::EDT_OPENGL,
 		testp::nub::dimension2du{1925, 1085},
 		32,

@@ -10,7 +10,7 @@
 
 int main()
 {
-	auto device =testp::createDevice();
+	auto device =testp::createPub();
 	auto scene = device->getSceneManager();
 
 	testp::io::IFileSystem * fs = device->getFileSystem();

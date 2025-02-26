@@ -20,7 +20,7 @@ protected:
 public:
 	device():
 		__device{
-			testp::createDevice(
+			testp::createPub(
 				testp::video::EDT_BURNINGSVIDEO,
 				testp::nub::dimension2du{1280u, 720u},
 				32,
@@ -133,7 +133,7 @@ public:
 int main()
 {
 	{
-		testp::TestpubDevice * device = testp::createDevice(
+		testp::TestpubDevice * device = testp::createPub(
 			testp::video::EDT_BURNINGSVIDEO,
 			testp::nub::dimension2du{2560u, 1440u},
 			32,

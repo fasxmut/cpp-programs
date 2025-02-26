@@ -28,7 +28,7 @@ try
 	const testp::uint32_pub light_radius = Botan::BigInt{argv[2]}.to_u32bit();
 	const std::string model = argv[3];
 
-	testp::TestpubDevice * device = testp::createDevice(
+	testp::TestpubDevice * device = testp::createPub(
 		testp::video::EDT_OPENGL,
 		testp::nub::dimension2du{1925, 1085},
 		32,

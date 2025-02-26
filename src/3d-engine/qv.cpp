@@ -87,7 +87,7 @@ namespace game
 			std::uint32_t height__
 		):
 			device{
-				testp::createDevice(
+				testp::createPub(
 					testp::video::EDT_OPENGL,
 					testp::nub::dimension2du{
 						width__,

@@ -55,7 +55,7 @@ try
 	{
 		if (device)
 			device->drop();
-		device = testp::createDevice(testp::video::EDT_NULL);
+		device = testp::createPub(testp::video::EDT_NULL);
 		auto fs = device->getFileSystem();
 		auto scene = device->getSceneManager();
 		testp::scene::IAnimatedMesh * mesh = scene->getMesh(input.data());
@@ -120,7 +120,7 @@ try
 	{
 		if (device)
 			device->drop();
-		device = testp::createDevice(
+		device = testp::createPub(
 			testp::video::EDT_OPENGL,
 			testp::nub::dimension2du{1925, 1085},
 			32,
