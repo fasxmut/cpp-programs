@@ -83,3 +83,12 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	shader-model
+:
+	shader-model.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+
