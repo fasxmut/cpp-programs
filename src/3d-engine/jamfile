@@ -101,3 +101,12 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	choose-animations
+:
+	choose-animations.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+
