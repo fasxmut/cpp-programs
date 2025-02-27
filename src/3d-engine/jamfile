@@ -92,3 +92,12 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	dupli-mesh
+:
+	dupli-mesh.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+
