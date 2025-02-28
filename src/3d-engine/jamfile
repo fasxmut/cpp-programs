@@ -110,3 +110,12 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	save-load-irr
+:
+	save-load-irr.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+
