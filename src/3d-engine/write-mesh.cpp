@@ -34,7 +34,7 @@ namespace cpp
 		engine(testp::uint32_pub width__, testp::uint32_pub height__):
 			__device{
 				testp::createPub(
-					testp::video::EDT_OPENGL,
+					testp::video::EDT_EGXU,
 					testp::nub::dimension2du{width__, height__},
 					32,
 					false,

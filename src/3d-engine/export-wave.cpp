@@ -341,7 +341,7 @@ try
 	my_cpp::viewer viewer;
 
 	{
-		auto device = testp::createPub(testp::video::EDT_OPENGL, testp::nub::dimension2du{100,100});
+		auto device = testp::createPub(testp::video::EDT_EGXU, testp::nub::dimension2du{100,100});
 		auto scene = device->getSceneManager();
 		auto video = device->getVideoDriver();
 		auto camera = scene->addCameraSceneNodeFPS(
@@ -403,7 +403,7 @@ try
 	}
 	{
 		testp::TestpubDevice * device = testp::createPub(
-			testp::video::EDT_OPENGL,
+			testp::video::EDT_EGXU,
 			testp::nub::dimension2du{1925, 1085},
 			32,
 			false,

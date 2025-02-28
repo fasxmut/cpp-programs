@@ -39,7 +39,7 @@ try
 		throw std::runtime_error{"Please provide correct md2 mesh path"};
 
 	device = testp::createPub(
-		testp::video::EDT_OPENGL,
+		testp::video::EDT_EGXU,
 		testp::nub::dimension2du{2560, 1600},
 		32,
 		false,

@@ -88,7 +88,7 @@ namespace game
 		):
 			device{
 				testp::createPub(
-					testp::video::EDT_OPENGL,
+					testp::video::EDT_EGXU,
 					testp::nub::dimension2du{
 						width__,
 						height__

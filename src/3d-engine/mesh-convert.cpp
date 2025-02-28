@@ -121,7 +121,7 @@ try
 		if (device)
 			device->drop();
 		device = testp::createPub(
-			testp::video::EDT_OPENGL,
+			testp::video::EDT_EGXU,
 			testp::nub::dimension2du{1925, 1085},
 			32,
 			false,

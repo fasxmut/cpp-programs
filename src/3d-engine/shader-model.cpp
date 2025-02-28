@@ -32,7 +32,7 @@ try
 	}
 
 	testp::TestpubDevice * device = testp::createPub(
-		testp::video::EDT_OPENGL,
+		testp::video::EDT_EGXU,
 		testp::nub::dimension2du{1920, 1080},
 		32,
 		false,
