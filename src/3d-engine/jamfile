@@ -128,3 +128,12 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	icosahedral
+:
+	icosahedral.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+
