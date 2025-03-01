@@ -137,3 +137,12 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	dodecahedral
+:
+	dodecahedral.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+

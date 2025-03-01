@@ -1,0 +1,15 @@
+c++ dodecahedral
+
+face:
+v0, v8, v9, v1, v12
+v0, v12, v13, v5, v18
+v0, v18, v19, v3, v8
+v1, v16, v6, v13, v12
+v2, v17, v16, v1, v9
+v2, v14, v15, v7, v17
+v2, v9, v8, v3, v14
+v3, v19, v4, v15, v14
+v4, v19, v18, v5, v10
+v4, v10, v11, v7, v15
+v6, v11, v10, v5, v13
+v6, v16, v17, v7, v11
