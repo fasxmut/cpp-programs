@@ -119,3 +119,12 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	ectahedron
+:
+	ectahedron.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+
