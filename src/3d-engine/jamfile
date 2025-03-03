@@ -146,3 +146,12 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	normal-map
+:
+	normal-map.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+

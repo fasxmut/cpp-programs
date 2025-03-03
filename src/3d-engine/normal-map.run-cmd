@@ -1,0 +1,13 @@
+./bin/gcc-14/debug/cxxstd-23-iso/normal-map \
+	-l \
+		mesh-buffer-rectangle.texture.png \
+	-f \
+		export-wave.texture.png \
+	-1 \
+		export-wave.screenshot.png \
+	-2 \
+		icosahedral.math.png \
+	-3 \
+		dodecahedral.png \
+	-4 \
+		write-mesh.texture.png \
