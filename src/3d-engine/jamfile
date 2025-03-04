@@ -155,3 +155,12 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	light-map
+:
+	light-map.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+
