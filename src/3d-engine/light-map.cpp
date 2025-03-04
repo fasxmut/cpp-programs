@@ -107,7 +107,7 @@ int main(int argc, char * argv[])
 	right->setMaterialFlag(testp::video::EMF_LIGHTING, true);
 	right->setMaterialTexture(0, video->getTexture(tex0.string().data()));
 	right->setMaterialTexture(1, video->getTexture(tex1.string().data()));
-	right->setMaterialType(testp::video::EMT_NORMAL_MAP_TRANSPARENT_VERTEX_ALPHA);
+	right->setMaterialType(testp::video::EMT_LIGHTMAP_LIGHTING_M4);
 
 	testp::scene::ILightSceneNode * light = scene->addLightSceneNode(
 		nullptr,

@@ -28,8 +28,12 @@ int main(int argc, char * argv[])
 		| lyra::opt(w3_tex, "w3_tex")["-3"]("wallet 3 texture")
 		| lyra::opt(w4_tex, "w4_tex")["-4"]("wallet 4 texture")
 	;
-	std::cout << cli << std::endl;
-	cli.parse({argc, argv});
+	if (help || argc == 1 || ! cli.parse({argc, argv}))
+	{
+		std::cout << cli << std::endl;
+		std::cout << "++++++++++++++++++++++\n";
+		return 0;
+	}
 
 	testp::TestpubDevice * device = testp::createPub(
 		testp::video::EDT_EGXU,
