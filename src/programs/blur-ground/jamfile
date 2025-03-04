@@ -5,9 +5,17 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-echo "Build cpp-programs/src ..." ;
+echo "Build cpp-programs/src/programs/blue-ground ..." ;
 
-build-project networking ;
-build-project 3d-engine ;
-build-project programs ;
+project
+	:
+		requirements
+			<library>../../..//testpub
+;
+
+exe
+	blur-ground
+:
+	blur-ground.cpp
+;
 

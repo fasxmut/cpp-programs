@@ -5,9 +5,7 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-echo "Build cpp-programs/src ..." ;
+echo "Build cpp-programs/src/programs ..." ;
 
-build-project networking ;
-build-project 3d-engine ;
-build-project programs ;
+build-project blur-ground ;
 
