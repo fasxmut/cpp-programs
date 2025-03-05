@@ -173,12 +173,3 @@ exe
 	<library>../..//testpub
 ;
 
-exe
-	merged-ground
-:
-	merged-ground.cpp
-:
-	<library>../..//lyra
-	<library>../..//testpub
-;
-

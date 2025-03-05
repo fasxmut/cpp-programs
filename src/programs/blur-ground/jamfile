@@ -19,3 +19,9 @@ exe
 	blur-ground.cpp
 ;
 
+exe
+	blur-ground-inverse
+:
+	blur-ground-inverse.cpp
+;
+
