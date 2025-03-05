@@ -173,3 +173,21 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	gui-toggle-visible
+:
+	gui-toggle-visible.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+
+exe
+	key-control-material
+:
+	key-control-material.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+
