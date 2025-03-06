@@ -191,3 +191,12 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	gui-visible
+:
+	gui-visible.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+
