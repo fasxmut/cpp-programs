@@ -200,3 +200,12 @@ exe
 	<library>../..//testpub
 ;
 
+exe
+	menu-event
+:
+	menu-event.cpp
+:
+	<library>../..//lyra
+	<library>../..//testpub
+;
+
