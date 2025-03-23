@@ -11,6 +11,7 @@ progs
 	=
 		promise
 		pack-task
+		pack-task-2
 ;
 
 for prog in $(progs)
