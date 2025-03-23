@@ -10,6 +10,7 @@ echo "Build cpp-programs/src/cpp/future ..." ;
 progs
 	=
 		promise
+		pack-task
 ;
 
 for prog in $(progs)
