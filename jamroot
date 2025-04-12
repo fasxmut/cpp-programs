@@ -95,7 +95,7 @@ alias boost-headers ;
 project
 :
 	default-build
-		<cxxstd>23
+		<cxxstd>26
 		<cxxflags>"-I$(botan-include)"
 :
 	requirements

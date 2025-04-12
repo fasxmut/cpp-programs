@@ -5,7 +5,16 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-echo "Build cpp-programs/src/cpp ..." ;
+echo "Build cpp-programs/src/cpp/future-kit ..." ;
 
-build-project future ;
-build-project future-kit ;
+for prog in
+	01.async
+	02.promise
+	03.promise
+	04.packaged
+	05.packaged
+	06.shared
+	07.shared
+{
+	exe $(prog) : $(prog).cpp ;
+}
