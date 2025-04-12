@@ -9,5 +9,5 @@ echo "Build cpp-programs/src ..." ;
 
 build-project cpp ;
 build-project networking ;
-build-project 3d-engine ;
+#build-project 3d-engine ;
 build-project programs ;

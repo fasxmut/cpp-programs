@@ -71,7 +71,7 @@ namespace game
 	public:
 		virtual ~engine()
 		{
-			if (! device)
+			if (device)
 			{
 				device->drop();
 				device = nullptr;

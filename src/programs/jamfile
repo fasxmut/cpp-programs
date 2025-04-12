@@ -7,5 +7,4 @@
 
 echo "Build cpp-programs/src/programs ..." ;
 
-build-project blur-ground ;
-
+#build-project blur-ground ;
